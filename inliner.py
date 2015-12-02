@@ -48,7 +48,7 @@ while True:
     break
 
 cutPoint = text.index("\n^")
-text = text[1:cutPoint]
+text = text[0:cutPoint]
 
 with open(str(sys.argv[2]),"w") as output:
   output.write(text)
