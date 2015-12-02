@@ -35,8 +35,6 @@ while counter <= int(sys.argv[3]):
   final = final.replace(cite, note)
   final = final.replace(cite2, note + "\n")
 
-  print counter
-  print note
   counter = counter + 1
 
 offcut = final.find("[^1]:")
