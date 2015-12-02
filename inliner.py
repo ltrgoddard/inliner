@@ -3,43 +3,52 @@
 # inliner - converts reference-style Markdown endnotes to
 #           Pandoc Markdown's inline footnotes
 
-# By Louis Goddard <louisgoddard@gmail.com>
+# by Louis Goddard <louisgoddard@gmail.com>
 
-# USAGE: python inliner.py [input file] [output file]
-#        [number of notes in file]
+# Usage: python inliner.py [input.md] [output.md]
 
 import sys
-import re
 
 with open(str(sys.argv[1]),"r") as input:
-  text = input.readlines()
-
-final = "".join(text)
+  text = input.read()
 
 counter = 1
 
-while counter <= int(sys.argv[3]):
+while True:
+  try:
 
-  ref = "[^" + str(counter) + "]:"
-  cite = "[^" + str(counter) + "] "
-  cite2 = "[^" + str(counter) + "]\n"
-  matching = [s for s in text if ref in s]
+    ref = "[^" + str(counter) + "]:"
+    nextRef = "[^" + str(counter + 1) + "]:"
+    cite = "[^" + str(counter) + "]"
+
+    refStart = text.index(ref)
+    refEnd = text.index(nextRef) - 2
   
-  if counter < 10:
-    note = "^[" + str(matching)[8:-4] + "] "
-  elif counter > 10 and counter < 100:
-    note = "^[" + str(matching)[9:-4] + "] "
-  else:
-    note = "^[" + str(matching)[10:-4] + "] "
+    if counter < 10:
+      offset = 6
+    elif counter > 10 and counter < 100:
+      offset = 7
+    elif counter > 100 and counter < 1000:
+      offset = 8
+    else:
+      offset = 9
 
-  final = final.replace(cite, note)
-  final = final.replace(cite2, note + "\n")
+    refStart = refStart + offset
 
-  counter = counter + 1
+    note = "^[" + text[refStart:refEnd] + "] "
+    text = text.replace(cite, note)
 
-offcut = final.find("[^1]:")
+    counter = counter + 1
 
-final = final[:offcut]
+  except:
+ 
+    note = "^[" + text[refStart:] + "]"
+    text = text.replace(cite, note)
+
+    break
+
+cutPoint = text.index("\n^")
+text = text[1:cutPoint]
 
 with open(str(sys.argv[2]),"w") as output:
-  output.write(final)
+  output.write(text)
