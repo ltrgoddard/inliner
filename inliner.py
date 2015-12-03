@@ -12,10 +12,12 @@ import sys
 with open(str(sys.argv[1]),"r") as input:
   text = input.read()
 
-counter = 1
+counter = 0
 
 while True:
   try:
+
+    counter = counter + 1
 
     ref = "[^" + str(counter) + "]:"
     nextRef = "[^" + str(counter + 1) + "]:"
@@ -33,19 +35,15 @@ while True:
     else:
       offset = 9
 
-    refStart = refStart + offset
-
-    note = "^[" + text[refStart:refEnd] + "] "
+    note = "^[" + text[refStart+offset:refEnd] + "] "
     text = text.replace(cite, note)
-
-    counter = counter + 1
 
   except:
- 
-    note = "^[" + text[refStart:] + "]"
-    text = text.replace(cite, note)
 
     break
+  
+note = "^[" + text[refStart+offset:len(text)-1] + "]"
+text = text.replace(cite, note)
 
 cutPoint = text.index("\n^")
 text = text[0:cutPoint]
