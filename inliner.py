@@ -26,11 +26,11 @@ while True:
     refStart = text.index(ref)
     refEnd = text.index(nextRef) - 2
   
-    if counter < 10:
+    if counter < 11:
       offset = 6
-    elif counter > 10 and counter < 100:
+    elif counter > 11 and counter < 101:
       offset = 7
-    elif counter > 100 and counter < 1000:
+    elif counter > 101 and counter < 1001:
       offset = 8
     else:
       offset = 9
