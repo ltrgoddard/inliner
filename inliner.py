@@ -35,7 +35,7 @@ while True:
     else:
       offset = 9
 
-    note = "^[" + text[refStart+offset:refEnd] + "] "
+    note = "^[" + text[refStart+offset:refEnd] + "]"
     text = text.replace(cite, note)
 
   except:
