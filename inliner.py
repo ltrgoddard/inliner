@@ -5,7 +5,7 @@
 
 # by Louis Goddard <louisgoddard@gmail.com>
 
-# Usage: python inliner.py [input.md] [output.md]
+# Usage: python inliner.py [input.markdown] [output.markdown]
 
 import sys
 
