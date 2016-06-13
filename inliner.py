@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 # inliner - converts reference-style Markdown endnotes to
 # Pandoc Markdown's inline footnotes
@@ -25,15 +25,8 @@ while True:
 
         refStart = text.index(ref)
         refEnd = text.index(nextRef) - 2
-    
-        if counter <= 9:
-            offset = 6
-        elif counter >= 10 and counter <= 100:
-            offset = 7
-        elif counter >= 100 and counter <= 1000:
-            offset = 8
-        else:
-            offset = 9
+   
+        offset = len(str(counter)) + 5
 
         note = "^[" + text[refStart+offset:refEnd] + "]"
         text = text.replace(cite, note)
@@ -44,6 +37,7 @@ while True:
     
 note = "^[" + text[refStart+offset:len(text)-1] + "]"
 text = text.replace(cite, note)
+text = text.replace("\n    ", " ")
 
 cutPoint = text.index("\n^")
 text = text[0:cutPoint]
