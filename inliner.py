@@ -9,7 +9,7 @@
 
 import sys
 
-with open(str(sys.argv[1]),"r") as input:
+with open(sys.argv[1], "r") as input:
     text = input.read()
 
 counter = 0
@@ -31,16 +31,23 @@ while True:
         note = "^[" + text[refStart+offset:refEnd] + "]"
         text = text.replace(cite, note)
 
-    except:
+    except ValueError:
+
 
         break
-    
-note = "^[" + text[refStart+offset:len(text)-1] + "]"
-text = text.replace(cite, note)
-text = text.replace("\n    ", " ")
 
-cutPoint = text.index("\n^")
-text = text[0:cutPoint]
+if counter > 1:
 
-with open(str(sys.argv[2]),"w") as output:
+    note = "^[" + text[refStart+offset:len(text)-1] + "]"
+    text = text.replace(cite, note)
+    text = text.replace("\n    ", " ")
+    cutPoint = text.index("\n^")
+    text = text[0:cutPoint]
+    print(str(counter) + " notes replaced.")
+
+else:
+
+    print("0 notes replaced.")
+
+with open(sys.argv[2], "w") as output:
     output.write(text)
