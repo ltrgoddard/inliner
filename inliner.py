@@ -9,7 +9,7 @@
 
 import sys
 
-with open(sys.argv[1], "r") as input:
+with open(sys.argv[1], "r", encoding="utf8") as input:
     text = input.read()
 
 counter = 0
@@ -49,5 +49,5 @@ else:
 
     print("0 notes replaced.")
 
-with open(sys.argv[2], "w") as output:
-    output.write(text)
+with open(sys.argv[2], "wb") as output:
+    output.write(text.encode("utf-8"))
